@@ -40,6 +40,7 @@ function getRepoInfoByUrl(url) {
 	//split the url and get repo name and user name
 
 	//todo:move this to helpers
+	//todo:no longer used?
 
 	var url_arr = url.split('/');
 	if (url_arr[3] === 'repos') {
@@ -79,6 +80,8 @@ service = module.exports = {
 
 		//Get first page of public events
 
+		var user_repo_map = [];
+
 		getPublicEvents({page: 1}).then(function (events) {
 
 			//scan each event
@@ -96,6 +99,8 @@ service = module.exports = {
 				var user = event.repo.name.split('/')[0];
 				var repo = event.repo.name.split('/')[1];
 
+				user_repo_map.push(user+'/'+repo);
+
 				//test
 //				user = 'xna2';
 //				repo = 'intouch2';
@@ -106,46 +111,27 @@ service = module.exports = {
 
 				return getReference({user: user, repo: repo, ref: ref}).then(function (ref) {
 					var sha = ref.object.sha;
-					return    getTree({user: user, repo: repo, sha: sha, recursive: true});
+					return    getTree({user: user, repo: repo, sha: sha, recursive: true}).then(function (res) {
+
+						//get a list of files.
+
+						var tree = res.tree;
+						var promises = tree.filter(isStyleFile).map(function (file) {
+
+
+							return getContent({user:user,repo:repo,path:file.path});
+
+							//return Q(undefined);
+
+						});
+						return Q.all(promises);
+
+					});
 				});
 			});
 			return Q.all(promises);
 		})
-			.then(function (trees) {
 
-				console.log('forest.length'+tress.length);
-
-				//get a list of files.
-				var BigPromises = tress.map(function (res) {
-					var tree = res.tree;
-					var promises = tree.filter(isStyleFile).map(function (file) {
-						console.log(file.url);
-						var options = getRepoInfoByUrl(file.url);
-						options.path = file.path;
-
-						console.log('WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW');
-						console.log(options);
-
-						return getContent(options);
-
-//					return Q(undefined);
-
-					});
-
-					console.log(promises.length);
-
-					return Q.all(promises);
-
-				});
-
-
-				return Q.all(BigPromises);
-
-				//find css/less/scss files and parse their contents
-
-
-
-			})
 			.catch(function (error) {
 
 				console.log('Opps, something went wrong.');
@@ -157,7 +143,15 @@ service = module.exports = {
 
 				console.log('group.length:'+groups.length);
 
-				groups.forEach(function (files) {
+				var results = [];
+
+				groups.forEach(function (files,i) {
+
+					var result = {};
+
+					result['id'] = user_repo_map[i];
+					result['primary'] = [];
+					result['fallback']  = [];
 
 					files.forEach(function (file) {
 
@@ -195,10 +189,10 @@ service = module.exports = {
 
 
 									});
-									console.log('-----------------------');
-									console.log(fonts);
+									fonts.forEach(function(font){
+										result['primary'].push(font);
 
-									console.log('-----------------------');
+									})
 								})
 
 							}
@@ -207,7 +201,10 @@ service = module.exports = {
 
 					});
 
+					results.push(result);
+
 				});
+				console.log(results);
 				console.log('WE ARE DOONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNE');
 			}
 
