@@ -7,6 +7,46 @@
 
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
+var Record = require('../api/record/record.model');
+
+Record.find({}).remove(function(){
+	Record.create({
+		name:'lato',
+		user : 'xna2',
+		repo : 'intouch2',
+		type: 'primary',
+    created: Date.now()
+	},{
+		name: 'helvetica neue',
+		user : 'xna2',
+		repo : 'intouch2',
+		type: 'fallback',
+		fallbackof:'lato',
+		created: Date.now()
+	},{
+		name: 'helvetica neue',
+		user : 'xna2',
+		repo : 'intouch2',
+		type: 'fallback',
+		fallbackof:'lato',
+		created: Date.now()
+	},{
+		name: 'helvetica',
+		user : 'xna2',
+		repo : 'intouch2',
+		type: 'fallback',
+		fallbackof:'lato',
+		created: Date.now()
+	},function(err){
+		console.log(err);
+		console.log('finished populating github data');
+	});
+
+
+
+
+
+});
 
 Thing.find({}).remove(function() {
   Thing.create({

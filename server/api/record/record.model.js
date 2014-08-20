@@ -1,12 +1,16 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+	Schema = mongoose.Schema;
 
 var RecordSchema = new Schema({
-  name: String,
-  info: String,
-  active: Boolean
+	name: {type:String,required:true},
+	repo: {type:String,required:true},
+	user: {type:String,required:true},
+	type: {type:String,required:true},
+	fallbackof: String,
+	created: Date,
+	active: Boolean
 });
 
 module.exports = mongoose.model('Record', RecordSchema);

@@ -54,6 +54,53 @@ exports.destroy = function(req, res) {
   });
 };
 
+
+// Returns top 50 most popular fonts
+exports.getMostPopular = function(req,res){
+
+	Record.aggregate([
+		{$match:{type:'primary'}}
+		,{$group:{_id:'$name',count:{$sum:1}}}
+		,{$sort:{count:-1}}
+		,{$limit:50}
+
+
+	],function(err,records){
+
+		if(err) { return handleError(res, err); }
+		if(!records) { return res.send(404); }
+		console.log(records);
+		return res.json(records);
+
+
+	});
+};
+
+// Find top 20 fallbacks for a given font
+exports.getFallbacksByName = function(req,res){
+
+	Record.aggregate([
+		{$match:{fallbackof:req.params.name}}
+		,{$group:{_id:'$name',count:{$sum:1}}}
+		,{$sort:{count:-1}}
+		,{$limit:20}
+
+
+	],function(err,records){
+
+		if(err) { return handleError(res, err); }
+		if(!records) { return res.send(404); }
+		console.log(records);
+		return res.json(records);
+
+
+	});
+
+};
+
+
+
 function handleError(res, err) {
+	console.log(err);
   return res.send(500, err);
 }
