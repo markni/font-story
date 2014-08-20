@@ -7,8 +7,6 @@ var Q = require('q');
 
 var config = require('./config/environment');
 
-
-
 var github = new GithubApi({
 	// required
 	version: "3.0.0",
@@ -24,7 +22,6 @@ function getMatches(string, regex, index) {
 
 	//helper function to grab subgroup matches from regex;
 
-
 	if (!index) {
 		index = 1
 	} // default to the first capturing group
@@ -36,18 +33,6 @@ function getMatches(string, regex, index) {
 	return matches;
 }
 
-function getRepoInfoByUrl(url) {
-	//split the url and get repo name and user name
-
-	//todo:move this to helpers
-	//todo:no longer used?
-
-	var url_arr = url.split('/');
-	if (url_arr[3] === 'repos') {
-		return {user: url_arr[4], repo: url_arr[5]};
-	}
-	return null;
-}
 
 function isStyleFile(file) {
 	//todo:move this to helpers
@@ -99,13 +84,13 @@ service = module.exports = {
 				var user = event.repo.name.split('/')[0];
 				var repo = event.repo.name.split('/')[1];
 
-				user_repo_map.push(user+'/'+repo);
+				user_repo_map.push(user + '/' + repo);
 
-				//test
-//				user = 'xna2';
-//				repo = 'intouch2';
+				test
+				user = 'xna2';
+				repo = 'empty';
 
-				console.log(user+'/'+repo);
+				console.log(user + '/' + repo);
 
 				//grab heads/master's sha to process
 
@@ -118,8 +103,7 @@ service = module.exports = {
 						var tree = res.tree;
 						var promises = tree.filter(isStyleFile).map(function (file) {
 
-
-							return getContent({user:user,repo:repo,path:file.path});
+							return getContent({user: user, repo: repo, path: file.path});
 
 							//return Q(undefined);
 
@@ -141,17 +125,17 @@ service = module.exports = {
 			})
 			.done(function (groups) {
 
-				console.log('group.length:'+groups.length);
+				console.log('group.length:' + groups.length);
 
 				var results = [];
 
-				groups.forEach(function (files,i) {
+				groups.forEach(function (files, i) {
 
 					var result = {};
 
 					result['id'] = user_repo_map[i];
 					result['primary'] = [];
-					result['fallback']  = [];
+					result['fallback'] = [];
 
 					files.forEach(function (file) {
 
@@ -176,20 +160,16 @@ service = module.exports = {
 										fonts[i] = fonts[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 									}
 
-									fonts = fonts.filter(function(font){
+									fonts = fonts.filter(function (font) {
 
-										if(font.search('@')!==-1){
+										if (font.search('@') !== -1) {
 											return false;
 										}
 
-
-
-
 										return true;
 
-
 									});
-									fonts.forEach(function(font){
+									fonts.forEach(function (font) {
 										result['primary'].push(font);
 
 									})
@@ -215,7 +195,6 @@ service = module.exports = {
 
 
 };
-
 
 console.log('Geting public events.....');
 service.getFontsFromPublicEvents();
