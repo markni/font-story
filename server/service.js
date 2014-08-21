@@ -84,11 +84,13 @@ service = module.exports = {
 				var user = event.repo.name.split('/')[0];
 				var repo = event.repo.name.split('/')[1];
 
+				console.log(event);
+
 				user_repo_map.push(user + '/' + repo);
 
-				test
-				user = 'xna2';
-				repo = 'empty';
+				//test empty repo
+//				user = 'xna2';
+//				repo = 'empty';
 
 				console.log(user + '/' + repo);
 
@@ -96,6 +98,8 @@ service = module.exports = {
 
 				return getReference({user: user, repo: repo, ref: ref}).then(function (ref) {
 					var sha = ref.object.sha;
+					console.log('are we eaven herer?');
+					console.log(sha);
 					return    getTree({user: user, repo: repo, sha: sha, recursive: true}).then(function (res) {
 
 						//get a list of files.
@@ -113,7 +117,7 @@ service = module.exports = {
 					});
 				});
 			});
-			return Q.all(promises);
+			return Q.allSettled(promises);
 		})
 
 			.catch(function (error) {
@@ -123,9 +127,23 @@ service = module.exports = {
 
 				// Handle any error from all above steps
 			})
-			.done(function (groups) {
+			.done(function (res) {
 
-				console.log('group.length:' + groups.length);
+//				console.log('group.length:' + groups.length);
+//
+//				console.log(groups);
+
+				var groups = [];
+
+				res.forEach(function(res){
+					if (res.state === 'fulfilled'){
+						groups.push(res.value);
+					}
+					else{
+						console.log(res.reason);
+					}
+
+				});
 
 				var results = [];
 
