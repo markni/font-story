@@ -75,7 +75,7 @@ service = module.exports = {
 			var ref = 'heads/master';
 
 			//testing methd to save some api calls
-			events = events.splice(0, 2);
+			events = events.splice(0, 5);
 
 			var promises = events.map(function (event) {
 
@@ -86,11 +86,15 @@ service = module.exports = {
 
 				console.log(event);
 
-				user_repo_map.push(user + '/' + repo);
+				user_repo_map.push({user:user,repo:repo});
 
 				//test empty repo
 //				user = 'xna2';
 //				repo = 'empty';
+
+//				test empty repo
+//				user = 'xna2';
+//				repo = 'intouch2';
 
 				console.log(user + '/' + repo);
 
@@ -149,13 +153,14 @@ service = module.exports = {
 
 				groups.forEach(function (files, i) {
 
-					var result = {};
-
-					result['id'] = user_repo_map[i];
-					result['primary'] = [];
-					result['fallback'] = [];
+					var r_user =   user_repo_map[i].user;
+					var r_repo =   user_repo_map[i].repo;
 
 					files.forEach(function (file) {
+
+						var r_created = new Date(file.meta['last-modified']);
+
+
 
 						var content = file.content;
 
@@ -181,14 +186,38 @@ service = module.exports = {
 									fonts = fonts.filter(function (font) {
 
 										if (font.search('@') !== -1) {
+
+											//todo:handle sass/less variable, return false for now
 											return false;
 										}
 
 										return true;
 
 									});
-									fonts.forEach(function (font) {
-										result['primary'].push(font);
+									fonts.forEach(function (font,i) {
+										var record = {};
+										record['name'] = font;
+										record['repo'] = r_repo;
+										record['user'] = r_user;
+										record['created'] = r_created;
+
+										if(fonts.length === 1 || i === 0){
+											//if only one font listed for font-family
+											record.type = 'primary';
+
+
+										}
+										else{
+											//more than one fonts listed;
+											record.type = 'fallback';
+											record.fallbackof  = fonts[0];
+
+
+										}
+
+										results.push(record);
+//
+//										result['primary'].push(font);
 
 									})
 								})
@@ -199,7 +228,7 @@ service = module.exports = {
 
 					});
 
-					results.push(result);
+
 
 				});
 				console.log(results);
