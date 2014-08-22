@@ -4,6 +4,9 @@ var service;
 
 var GithubApi = require('github');
 var Q = require('q');
+var Record = require('./api/record/record.model');
+
+
 
 var config = require('./config/environment');
 
@@ -210,12 +213,22 @@ service = module.exports = {
 										else{
 											//more than one fonts listed;
 											record.type = 'fallback';
-											record.fallbackof  = fonts[0];
+
+											record.fallbackof  = fonts[i-1];
 
 
 										}
 
 										results.push(record);
+
+										var r = new Record(record);
+
+										r.save(function(err){
+											if(err) {
+												console.log(err);
+											}
+										});
+
 //
 //										result['primary'].push(font);
 
@@ -232,6 +245,8 @@ service = module.exports = {
 
 				});
 				console.log(results);
+
+
 				console.log('WE ARE DOONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNE');
 			}
 
