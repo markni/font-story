@@ -9,6 +9,7 @@ var RecordSchema = new Schema({
 	user: {type:String,required:true},
 	type: {type:String,required:true},
 	fallbackof: String,
+	dependon: String,
 	created: Date,
 	active: Boolean
 });
