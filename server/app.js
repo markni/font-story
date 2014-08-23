@@ -30,8 +30,8 @@ require('./routes')(app);
 
 
 //Fetch Github services
-require('./service');
-
+require('./planner');
+//require('./service');
 
 // Start server
 server.listen(config.port, config.ip, function () {

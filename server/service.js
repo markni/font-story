@@ -5,8 +5,8 @@ var service;
 var GithubApi = require('github');
 var Q = require('q');
 var Record = require('./api/record/record.model');
-
-
+var Helper = require('./helper.js');
+var Parser = require('./parser.js');
 
 var config = require('./config/environment');
 
@@ -20,78 +20,56 @@ var github = new GithubApi({
 	timeout: 5000
 });
 
-function getMatches(string, regex, index) {
-	//todo:move this to helpers
-
-	//helper function to grab subgroup matches from regex;
-
-	if (!index) {
-		index = 1
-	} // default to the first capturing group
-	var matches = [];
-	var match;
-	while ((match = regex.exec(string))) {
-		matches.push(match[index]);
-	}
-	return matches;
-}
-
-
-function isStyleFile(file) {
-	//todo:move this to helpers
-
-	//check if the file is a css/less/sass file.
-
-	//exclude .min.css etc as it's reaptead content of a css file.
-
-	return (file.path.match(/(.less|.css|.sass|.scss)$/mi) !== null && file.path.match('.min.') === null);
-
-}
-
 github.authenticate({
 	type: "oauth",
 	key: config.github.clientID,
 	secret: config.github.clientSecret
 });
 
+//wrapping github API methods in Q.
+
+var getPublicEvents = Q.nbind(github.events.get, github.events);
+var getReference = Q.nbind(github.gitdata.getReference, github.gitdata);
+var getTree = Q.nbind(github.gitdata.getTree, github.gitdata);
+var getContent = Q.nbind(github.repos.getContent, github.repos);
+var getRateLimit = Q.nbind(github.misc.rateLimit, github.misc);
+
 service = module.exports = {
-	getFontsFromPublicEvents: function () {
 
-		//wrapping github API method in Q.
+	checkRateLimit: function (res) {
+		// check if we have enough api calls left
 
-		var getPublicEvents = Q.nbind(github.events.get, github.events);
-		var getReference = Q.nbind(github.gitdata.getReference, github.gitdata);
-		var getTree = Q.nbind(github.gitdata.getTree, github.gitdata);
-		var getContent = Q.nbind(github.repos.getContent, github.repos);
+		var remaining = res.rate.remaining;
+		if (remaining && remaining > 4000) {
+			return  getPublicEvents({page: 1});
+		}
+		else {
+			return Q.reject({message: 'remaining limit too small'});
+		}
 
-		//Do the work step by step
+	},
 
-		//Get first page of public events
+	getContentsFromEvents: function (events,user_repo_map) {
 
-		var user_repo_map = [];
 
-		getPublicEvents({page: 1}).then(function (events) {
+		//scan each event
 
-			//scan each event
+		//we only care about heads/master version
+		var ref = 'heads/master';
 
-			//we only care about heads/master version
-			var ref = 'heads/master';
+		//testing methd to save some api calls
+		events = events.splice(0, 2);
 
-			//testing methd to save some api calls
-			events = events.splice(0, 5);
+		var promises = events.map(function (event) {
 
-			var promises = events.map(function (event) {
+			//get user name and repo name from event
 
-				//get user name and repo name from event
+			var user = event.repo.name.split('/')[0];
+			var repo = event.repo.name.split('/')[1];
 
-				var user = event.repo.name.split('/')[0];
-				var repo = event.repo.name.split('/')[1];
+			user_repo_map.push({user: user, repo: repo});
 
-				console.log(event);
-
-				user_repo_map.push({user:user,repo:repo});
-
-				//test empty repo
+			//test empty repo
 //				user = 'xna2';
 //				repo = 'empty';
 
@@ -99,54 +77,78 @@ service = module.exports = {
 //				user = 'xna2';
 //				repo = 'intouch2';
 
-				console.log(user + '/' + repo);
+			console.log(user + '/' + repo);
 
-				//grab heads/master's sha to process
+			//grab heads/master's sha to process
 
-				return getReference({user: user, repo: repo, ref: ref}).then(function (ref) {
-					var sha = ref.object.sha;
-					console.log('are we eaven herer?');
-					console.log(sha);
-					return    getTree({user: user, repo: repo, sha: sha, recursive: true}).then(function (res) {
+			return getReference({user: user, repo: repo, ref: ref}).then(function (ref) {
+				var sha = ref.object.sha;
+				return    getTree({user: user, repo: repo, sha: sha, recursive: true}).then(function (res) {
 
-						//get a list of files.
+					//get a list of files.
 
-						var tree = res.tree;
-						var promises = tree.filter(isStyleFile).map(function (file) {
+					var tree = res.tree;
+					var promises = tree.filter(Parser.isStyleFile).map(function (file) {
 
-							return getContent({user: user, repo: repo, path: file.path});
+						return getContent({user: user, repo: repo, path: file.path});
 
-							//return Q(undefined);
-
-						});
-						return Q.all(promises);
+						//return Q(undefined);
 
 					});
+					return Q.all(promises);
+
 				});
 			});
-			return Q.allSettled(promises);
-		})
+		});
+		return Q.allSettled(promises);
 
-			.catch(function (error) {
+	},
+
+	getFontsFromPublicEvents: function () {
+
+
+		//Do the work step by step
+
+		//Get first page of public events
+
+		var user_repo_map = [];
+
+		getRateLimit({
+
+		}).then(function (res) {
+
+				console.log('Checking limit');
+				return service.checkRateLimit(res);
+
+			}).then(function (events) {
+
+				console.log('GetContents...');
+
+				return service.getContentsFromEvents(events,user_repo_map);
+
+			}).catch(function (error) {
 
 				console.log('Opps, something went wrong.');
 				console.log(error);
 
 				// Handle any error from all above steps
-			})
-			.done(function (res) {
+			}).done(function (res) {
+				console.log('Finally....');
+				console.log(res);
 
-//				console.log('group.length:' + groups.length);
-//
-//				console.log(groups);
+				if (!res) {
+					return;
+				}
+
+				console.log('Processing files...');
 
 				var groups = [];
 
-				res.forEach(function(res){
-					if (res.state === 'fulfilled'){
+				res.forEach(function (res) {
+					if (res.state === 'fulfilled') {
 						groups.push(res.value);
 					}
-					else{
+					else {
 						console.log(res.reason);
 					}
 
@@ -156,14 +158,12 @@ service = module.exports = {
 
 				groups.forEach(function (files, i) {
 
-					var r_user =   user_repo_map[i].user;
-					var r_repo =   user_repo_map[i].repo;
+					var r_user = user_repo_map[i].user;
+					var r_repo = user_repo_map[i].repo;
 
 					files.forEach(function (file) {
 
 						var r_created = new Date(file.meta['last-modified']);
-
-
 
 						var content = file.content;
 
@@ -173,7 +173,7 @@ service = module.exports = {
 
 							var css_plain_text = new Buffer(file.content, 'base64').toString('utf-8');
 							var regex = /font-family:(((?![;]{1,}).)*);/gmi;
-							var found = getMatches(css_plain_text, regex, 1);
+							var found = Helper.getMatches(css_plain_text, regex, 1);
 
 							if (found.length) {
 
@@ -197,40 +197,43 @@ service = module.exports = {
 										return true;
 
 									});
-									fonts.forEach(function (font,i) {
+									fonts.forEach(function (font, i) {
 										var record = {};
 										record['name'] = font;
 										record['repo'] = r_repo;
 										record['user'] = r_user;
 										record['created'] = r_created;
 
-										if(fonts.length === 1 || i === 0){
+										if (fonts.length === 1 || i === 0) {
 											//if only one font listed for font-family
 											record.type = 'primary';
 
-
 										}
-										else{
+										else {
 											//more than one fonts listed;
 											record.type = 'fallback';
 
-											record.fallbackof  = fonts[i-1];
+											record.fallbackof = fonts[i - 1];
 
+										}
 
+										if (Parser.isGeneric(font)) {
+											record.type = 'generic';
+										}
+
+										if (fonts.length - 1 > i) {
+											record.dependon = fonts[i + 1];
 										}
 
 										results.push(record);
 
 										var r = new Record(record);
 
-										r.save(function(err){
-											if(err) {
+										r.save(function (err) {
+											if (err) {
 												console.log(err);
 											}
 										});
-
-//
-//										result['primary'].push(font);
 
 									})
 								})
@@ -241,13 +244,8 @@ service = module.exports = {
 
 					});
 
-
-
 				});
-				console.log(results);
-
-
-				console.log('WE ARE DOONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNE');
+				console.log('Fetching public data compeleted. There are ' + results.length + ' new records have been stored.');
 			}
 
 		);
@@ -259,4 +257,5 @@ service = module.exports = {
 };
 
 console.log('Geting public events.....');
-service.getFontsFromPublicEvents();
+//service.getFontsFromPublicEvents();
+//service.getRateLimit();
