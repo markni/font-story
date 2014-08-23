@@ -55,6 +55,21 @@ exports.destroy = function(req, res) {
 };
 
 
+
+// Returns total count of entries
+exports.getCount = function(req,res){
+
+	Record.count({},function(err,count){
+		if(err) { return handleError(res, err); }
+
+		return res.json({count:count});
+
+	});
+};
+
+
+
+
 // Returns top 50 most popular fonts
 exports.getMostPopular = function(req,res){
 

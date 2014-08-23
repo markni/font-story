@@ -62,3 +62,20 @@ describe('GET /api/records/top', function() {
 	});
 
 });
+
+
+describe('GET /api/records/count',function(){
+	it('should respond get the total number of entry', function(done) {
+		request(app)
+			.get('/api/records/count')
+			.expect(200)
+			.expect('Content-Type', /json/)
+			.end(function(err, res) {
+				if (err) return done(err);
+				res.body.should.have.property('count');
+				res.body.count.should.be.above(0);
+
+				done();
+			});
+	});
+});

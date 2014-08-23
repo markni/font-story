@@ -40,7 +40,7 @@ service = module.exports = {
 		// check if we have enough api calls left
 
 		var remaining = res.rate.remaining;
-		if (remaining && remaining > 4000) {
+		if (remaining && remaining > 2000) {
 			return  getPublicEvents({page: 1});
 		}
 		else {
@@ -58,7 +58,7 @@ service = module.exports = {
 		var ref = 'heads/master';
 
 		//testing methd to save some api calls
-		events = events.splice(0, 2);
+//		events = events.splice(0, 5);
 
 		var promises = events.map(function (event) {
 
@@ -188,15 +188,16 @@ service = module.exports = {
 
 									fonts = fonts.filter(function (font) {
 
-										if (font.search('@') !== -1) {
-
+										if (font.search(/^[-a-z ]+$/gm) === -1 || font.search('inherit') !== -1) {
+											console.log(font);
+										 	console.log('rejected font...');
+											//todo:handle non-english font
 											//todo:handle sass/less variable, return false for now
 											return false;
 										}
-
 										return true;
-
 									});
+
 									fonts.forEach(function (font, i) {
 										var record = {};
 										record['name'] = font;

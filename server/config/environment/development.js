@@ -8,5 +8,5 @@ module.exports = {
     uri: 'mongodb://localhost/fontstory-dev'
   },
 
-  seedDB: true
+  seedDB: false
 };

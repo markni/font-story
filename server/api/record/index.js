@@ -7,6 +7,7 @@ var router = express.Router();
 
 router.get('/fallbacks/:name', controller.getFallbacksByName);
 router.get('/top', controller.getMostPopular);
+router.get('/count', controller.getCount);
 
 router.get('/', controller.index);
 router.get('/:id', controller.show);
