@@ -10,10 +10,10 @@ angular.module('fontStoryApp')
 
 
 
-    $http.get('/api/things').success(function(awesomeThings) {
-      $scope.awesomeThings = awesomeThings;
-      socket.syncUpdates('thing', $scope.awesomeThings);
-    });
+//    $http.get('/api/things').success(function(awesomeThings) {
+//      $scope.awesomeThings = awesomeThings;
+//      socket.syncUpdates('thing', $scope.awesomeThings);
+//    });
 
 		$http.get('/api/records/count').success(function(res){
 			$scope.count = res.count || 1000;
@@ -57,12 +57,12 @@ angular.module('fontStoryApp')
 			$scope.serif['sans-serif'] =  sansSerifCount;
 			if(serifCount > sansSerifCount){
 				$scope.serif.winner = 'Serif';
-				$scope.serif.percentage = parseInt(serifCount/ (serifCount+sansSerifCount+1) *100);
+				$scope.serif.percentage = Math.round(serifCount/ (serifCount+sansSerifCount+1) *100);
 				$scope.serif.style = 'traditional';
 			}
 			else{
 				$scope.serif.winner = 'Sans-Serif';
-				$scope.serif.percentage = parseInt(sansSerifCount/ (serifCount+sansSerifCount+1) * 100);
+				$scope.serif.percentage = Math.round(sansSerifCount/ (serifCount+sansSerifCount+1) * 100);
 				$scope.serif.style = 'modern';
 			}
 
@@ -73,8 +73,8 @@ angular.module('fontStoryApp')
 		$http.get('/api/records/awesome-vs-glyph').success(function(res){
 			var awesomeCount =    res.awesome;
 			var glyphCount = res.glyph;
-			var awesomeDisplay = new Array(parseInt(awesomeCount/ (awesomeCount+glyphCount+1) *100));
-			var glyphDisplay =  new Array(parseInt(glyphCount/ (awesomeCount+glyphCount+1) * 100));
+			var awesomeDisplay = new Array(Math.round(awesomeCount/ (awesomeCount+glyphCount+1) *100));
+			var glyphDisplay =  new Array(Math.round(glyphCount/ (awesomeCount+glyphCount+1) * 100));
 			$scope.icon.awesomeIcons =  awesomeDisplay;
 			$scope.icon.glyphIcons = glyphDisplay;
 
@@ -82,7 +82,7 @@ angular.module('fontStoryApp')
 			$scope.icon.glyph =  glyphCount;
 			if(awesomeCount > glyphCount){
 				$scope.icon.winner = 'Font Awesome';
-				$scope.icon.times = parseInt(awesomeCount/ (glyphCount+1));
+				$scope.icon.times = Math.round(awesomeCount/ (glyphCount+1));
 				$scope.icon.loser = 'Glyphicon';
 				$scope.icon.reason = 'it offers 2 times more icons';
 				$scope.icon.highlighted = 'a';
@@ -90,7 +90,7 @@ angular.module('fontStoryApp')
 			}
 			else{
 				$scope.icon.winner = 'Glyphicon';
-				$scope.icon.times = parseInt(glyphCount/ (awesomeCount+1));
+				$scope.icon.times = Math.round(glyphCount/ (awesomeCount+1));
 				$scope.icon.loser = 'Font Awesome';
 				$scope.icon.reason = 'it loads a little faster';
 				$scope.icon.highlighted = 'g';
