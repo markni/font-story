@@ -198,6 +198,8 @@ service = module.exports = {
 										return true;
 									});
 
+									console.log();
+
 									fonts.forEach(function (font, i) {
 										var record = {};
 										record['name'] = font;

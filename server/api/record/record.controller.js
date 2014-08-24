@@ -55,6 +55,36 @@ exports.destroy = function(req, res) {
 };
 
 
+//compare the counts of serif and sans-serif font
+exports.compareFonts = function(req,res){
+	console.log('test?');
+	var result = {};
+
+
+	Record.count({$and:[{type:'generic'},{name:'serif'}]},function(err,count){
+			if(err) { return handleError(res, err); }
+			result['serif'] = count;
+
+
+		Record.count({$and:[{type:'generic'},{name:'sans-serif'}]},function(err,count2){
+			if(err) { return handleError(res, err); }
+
+			result['sans-serif'] = count2;
+
+			return res.json(result);
+
+
+
+		})
+
+
+
+	})
+
+
+};
+
+
 
 // Returns total count of entries
 exports.getCount = function(req,res){
@@ -77,7 +107,7 @@ exports.getMostPopular = function(req,res){
 		{$match:{type:'primary'}}
 		,{$group:{_id:'$name',count:{$sum:1}}}
 		,{$sort:{count:-1}}
-		,{$limit:50}
+		,{$limit:20}
 
 
 	],function(err,records){

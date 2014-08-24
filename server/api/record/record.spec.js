@@ -66,15 +66,34 @@ describe('GET /api/records/top', function() {
 
 describe('GET /api/records/count',function(){
 	it('should respond get the total number of entry', function(done) {
+	request(app)
+		.get('/api/records/count')
+		.expect(200)
+		.expect('Content-Type', /json/)
+		.end(function(err, res) {
+			if (err) return done(err);
+			res.body.should.have.property('count');
+			res.body.count.should.be.above(0);
+
+			done();
+		});
+});
+});
+
+
+describe('GET /api/records/serif-vs-sans-serif',function(){
+	it('should respond with count of sans-serif and serif', function(done) {
 		request(app)
-			.get('/api/records/count')
+			.get('/api/records/serif-vs-sans-serif')
 			.expect(200)
 			.expect('Content-Type', /json/)
 			.end(function(err, res) {
 				if (err) return done(err);
-				res.body.should.have.property('count');
-				res.body.count.should.be.above(0);
-
+				res.body.should.have.property('serif');
+				res.body.should.have.property('sans-serif');
+				res.body.serif.should.be.above(0);
+				res.body['sans-serif'].should.be.above(0);
+				console.log(res.body);
 				done();
 			});
 	});

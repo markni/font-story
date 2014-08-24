@@ -31,7 +31,28 @@ Record.find({}).remove(function(){
 		fallbackof:'lato',
 		created: Date.now()
 	},{
-		name: 'helvetica',
+		name: 'serif',
+		user : 'xna2',
+		repo : 'intouch2',
+		type: 'generic',
+		fallbackof:'helvetic neue',
+		created: Date.now()
+	},{
+		name: 'sans-serif',
+		user : 'xna2',
+		repo : 'intouch2',
+		type: 'generic',
+		fallbackof:'lato',
+		created: Date.now()
+	},{
+		name: 'sans-serif',
+		user : 'xna2',
+		repo : 'intouch3',
+		type: 'generic',
+		fallbackof:'lato',
+		created: Date.now()
+	},{
+		name: 'helvetica neue',
 		user : 'xna2',
 		repo : 'intouch2',
 		type: 'fallback',

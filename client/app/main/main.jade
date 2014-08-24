@@ -1,15 +1,64 @@
-div(ng-include='"components/navbar/navbar.html"')
+//div(ng-include='"components/navbar/navbar.html"')
 
 header#banner.hero-unit
   .container
-    h1 'Allo, 'Allo!
-    p.lead Kick-start your next web app with Angular Fullstack
-    img(src='assets/images/yeoman.png', alt='I\'m Yeoman')
+    h1
+      | So, I heard you need a
+      a(href='#', tooltip="Typeface is not the same as a font! Your designer yelled at you. Ok, sure. We will still call our project font story anyways.")  {Typeface}
+      |  for your web projects.
+
+    p.lead Our data from {{numberWithCommas(count)}} github commits might just help.
+
 
 .container
-  .row
+  .row#fav
+    h2 {Github's Favourite Fonts}
+
+    ol
+      li(ng-repeat='font in topFonts')
+        span.rank {{20-$index}} .
+        span(ng-style='applyFont(font._id)') {{font._id}}
+.container
+  .row#compare-serif
+    h2.text-center {Serif or Sans-Serif, that's A question}
+
+    div.col-xs-6.text-center.serif#serif
+      a(tooltip="This is a serif font. Notice it has those little feet in the bottom.",tooltip-placement="right") A
+    div.col-xs-6.text-center.serif#sans-serif
+      a(tooltip="This is a sans-serif font. The word sans means without, that pretty much explained itself.",tooltip-placement="left") A
+
+    p.text-center.lead
+      | Over
+      a  {{serif.percentage}}%
+      |  percent of github choose to use {{serif.winner}} fonts, a more {{serif.style}} appoach.
+    p.text-center.lead
+      | But really, what does
+      a(href="http://en.wikipedia.org/wiki/Serif" alt="A link to people who can explain Serif better than me.",tooltip="Click this will redirect you to a site that can explain Serif better than me.")  Serif
+      |  even mean?
+
+.container
+  .row#find
+    h2.text-center {Find fallback fonts}
+    p.text-center.lead There is always a chance your fancy fonts won't load
+
+  form.font-form
+
+
+    p.input-group
+      input.form-control(type='text', placeholder='Input your font name here, see what other people on Github used as fallbacks', ng-model='searchTerm')
+      span.input-group-btn
+        button.btn.btn-primary(type='submit', ng-click='find()') Find
+
+    ul.nav.nav-tabs.nav-stacked.col-md-4.col-lg-4.col-sm-6(ng-repeat='font in findFonts')
+      li
+        a(href='#',ng-click='findSelected(font._id)') {{font._id}}
+
+
+.container
+  .row#graph
     .col-lg-12
       h1.page-header Features:
+
       ul.nav.nav-tabs.nav-stacked.col-md-4.col-lg-4.col-sm-6(ng-repeat='thing in awesomeThings')
         li
           a(href='#', tooltip='{{thing.info}}')
