@@ -27,21 +27,24 @@ angular.module('fontStoryApp')
 
 			var tops = res;
 
-			var css = "";
+			var css = '';
+
+
+			var capitalize = function(str){
+				return    str.charAt(0).toUpperCase() + str.slice(1);
+			};
+
 			for(var i=0;i<tops.length;i++){
 
-				var name = tops[i]._id.split(' ').map(function(str){
+				var name = tops[i]._id.split(' ').map(capitalize).join('+');
 
-					return    str.charAt(0).toUpperCase() + str.slice(1);
-
-				}).join('+');
-				var google_import_css = '@import url(http://fonts.googleapis.com/css?family='+name+');\n'
-				css += google_import_css;
+				var googleImport = '@import url(http://fonts.googleapis.com/css?family='+name+');\n';
+				css +=  googleImport;
 
 			}
 
-			var style = document.createElement("style");
-			style.type = "text/css";
+			var style = document.createElement('style');
+			style.type = 'text/css';
 			style.innerHTML = css;
 			document.head.appendChild(style);
 
@@ -89,7 +92,7 @@ angular.module('fontStoryApp')
 				$scope.icon.winner = 'Glyphicon';
 				$scope.icon.times = parseInt(glyphCount/ (awesomeCount+1));
 				$scope.icon.loser = 'Font Awesome';
-				$scope.icon.reason = 'it loads a little faster'
+				$scope.icon.reason = 'it loads a little faster';
 				$scope.icon.highlighted = 'g';
 			}
 
@@ -97,7 +100,7 @@ angular.module('fontStoryApp')
 		});
 
 		$scope.isHighLighted = function(flag){
-			return ($scope.icon.highlighted === flag)
+			return ($scope.icon.highlighted === flag);
 		};
 
     $scope.addThing = function() {
@@ -118,7 +121,7 @@ angular.module('fontStoryApp')
 
 
 		$scope.numberWithCommas = function(x) {
-			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 		};
 
 		$scope.find = function(){

@@ -52,9 +52,20 @@ $light: #4393B9;
 }
 
 #fav {
-  margin-top: 50px;
+  position:relative;
+
   padding-top: 50px;
   text-align: right;
+  #circle {
+	width: 300px;
+	height: 300px;
+	border-radius: 50%;
+	background-color: red;
+	position: absolute;
+	left:0;
+	top:50%;
+  }
+
   span.rank{
 	font-size: 15px;
 	font-family: 'Lato', sans-serif;

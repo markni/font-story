@@ -205,10 +205,10 @@ service = module.exports = {
 
 									fonts.forEach(function (font, i) {
 										var record = {};
-										record['name'] = font;
-										record['repo'] = r_repo;
-										record['user'] = r_user;
-										record['created'] = r_created;
+										record.name = font;
+										record.repo = r_repo;
+										record.user = r_user;
+										record.created = r_created;
 
 										if (fonts.length === 1 || i === 0) {
 											//if only one font listed for font-family

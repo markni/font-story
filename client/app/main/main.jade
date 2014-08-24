@@ -4,7 +4,7 @@ header#banner.hero-unit
   .container
     h1
       | So, I heard you need a
-      a(href='#', tooltip="Typeface is not the same as a font! Your designer yelled at you before. Ok, sure. We will still call our project Font Story anyways.",tooltip-placement="bottom")  {Typeface}
+      a(href='#', tooltip="Typeface is not the same as a font! Your designer yelled at you before. Ok, sure. We will still call our project Fonts Story anyways.",tooltip-placement="bottom")  {Typeface}
       |  for your next web projects.
 
     p.lead Our analysis from {{numberWithCommas(count)}} github contents might just help.
@@ -12,6 +12,7 @@ header#banner.hero-unit
 
 .container
   .row#fav
+
     h2 {Github's Favourite Fonts}
 
     ol
@@ -33,7 +34,7 @@ header#banner.hero-unit
       |  percent of github choose to use {{serif.winner}} fonts, a more {{serif.style}} way to print letters.
     p.text-center.lead
       | But really, what does
-      a(href="http://en.wikipedia.org/wiki/Serif" alt="A link to people who can explain Serif better than me.",tooltip="Click this will redirect you to a site that can explain Serif better than me.")  Serif
+      a(href="http://en.wikipedia.org/wiki/Serif",target="_blank",alt="A link to people who can explain Serif better than me.",tooltip="Click this will redirect you to a site that can explain Serif better than me.")  Serif
       |  even mean?
 
 
@@ -104,4 +105,4 @@ footer.footer
       = 'An "infotypographic" written by '
       a(href='https://twitter.com/ruocaled') @ruocaled
       = ' with '
-      a(href='https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open') Github API
+      a(href='https://developer.github.com/v3/') Github API
