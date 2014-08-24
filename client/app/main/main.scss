@@ -66,6 +66,10 @@ $light: #4393B9;
   ol{
 	list-style: none;
 	li{
+	  cursor: pointer;
+	  &:hover{
+		color:$light;
+	  }
 	  font-size: 25px;
 	  &:last-of-type{
 		font-size: 100px;
@@ -77,15 +81,7 @@ $light: #4393B9;
 }
 
 #compare-serif{
-  border-top: solid #000000 3px;
-  margin-top: 50px;
-  padding-top: 50px;
-  a{
-	text-decoration: none;
-  }
-  h2,p {
-	font-family: 'Noto Serif', serif;
-  }
+
   .serif{
 	font-size: 250px;
 	a{
@@ -110,6 +106,56 @@ $light: #4393B9;
 }
 
 #find{
+
+}
+
+
+#icon {
+  .highlighted{
+	color:$light !important;
+  }
+  a{
+	cursor: pointer;
+	color:black;
+	&:hover{
+	  color:$light;
+	}
+  }
+  .result {margin-top: 30px;}
+  .questionDialog{
+
+	padding-bottom: 50px;
+  }
+
+ li{
+   display: inline-block;
+   height: 50px;
+   width:50px;
+
+   vertical-align:text-bottom;
+   text-align: center;
+
+   i{
+	 font-size: 30px;
+	 line-height: 50px;
+	 &.fa{
+
+	 }
+	 &.glyphicon{
+
+	   font-size: 25px;
+
+
+	 }
+
+   }
+
+ }
+
+
+}
+
+.part {
   border-top: solid #000000 3px;
   margin-top: 50px;
   padding-top: 50px;
@@ -119,7 +165,9 @@ $light: #4393B9;
   h2,p {
 	font-family: 'Noto Serif', serif;
   }
-
+  ul,ol {
+	list-style: none;
+  }
 }
 
 

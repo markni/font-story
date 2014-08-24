@@ -98,3 +98,22 @@ describe('GET /api/records/serif-vs-sans-serif',function(){
 			});
 	});
 });
+
+
+describe('GET /api/records/awesome-vs-glyph',function(){
+	it('should respond with count of fontawesome and glyphicons halfings', function(done) {
+		request(app)
+			.get('/api/records/awesome-vs-glyph')
+			.expect(200)
+			.expect('Content-Type', /json/)
+			.end(function(err, res) {
+				if (err) return done(err);
+				res.body.should.have.property('awesome');
+				res.body.should.have.property('glyph');
+				res.body.glyph.should.be.above(-1);
+				res.body.awesome.should.be.above(-1);
+				console.log(res.body);
+				done();
+			});
+	});
+});

@@ -56,8 +56,8 @@ exports.destroy = function(req, res) {
 
 
 //compare the counts of serif and sans-serif font
-exports.compareFonts = function(req,res){
-	console.log('test?');
+exports.compareSerif = function(req,res){
+
 	var result = {};
 
 
@@ -83,6 +83,40 @@ exports.compareFonts = function(req,res){
 
 
 };
+
+
+//compare the counts of serif and sans-serif font
+exports.compareIcon = function(req,res){
+
+	var result = {};
+
+
+	Record.count({name:'fontawesome'},function(err,count){
+		if(err) { return handleError(res, err); }
+		result['awesome'] = count;
+
+		Record.count({name:'glyphicons halflings'},function(err,count2){
+			if(err) { return handleError(res, err); }
+
+			result['glyph'] = count2;
+
+			console.log(result);
+
+			return res.json(result);
+
+
+
+		})
+
+
+
+	})
+
+
+};
+
+
+
 
 
 

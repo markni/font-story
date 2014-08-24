@@ -6,6 +6,7 @@ angular.module('fontStoryApp')
 		$scope.topFonts = [];
 		$scope.count = 1000;
 		$scope.serif = {};
+		$scope.icon = {};
 
 
 
@@ -21,6 +22,28 @@ angular.module('fontStoryApp')
 
 		$http.get('/api/records/top').success(function(res){
 			$scope.topFonts = res.reverse();
+
+			//import google fonts by name if there is any
+
+			var tops = res;
+
+			var css = "";
+			for(var i=0;i<tops.length;i++){
+
+				var name = tops[i]._id.split(' ').map(function(str){
+
+					return    str.charAt(0).toUpperCase() + str.slice(1);
+
+				}).join('+');
+				var google_import_css = '@import url(http://fonts.googleapis.com/css?family='+name+');\n'
+				css += google_import_css;
+
+			}
+
+			var style = document.createElement("style");
+			style.type = "text/css";
+			style.innerHTML = css;
+			document.head.appendChild(style);
 
 		});
 
@@ -42,6 +65,40 @@ angular.module('fontStoryApp')
 
 
 		});
+
+
+		$http.get('/api/records/awesome-vs-glyph').success(function(res){
+			var awesomeCount =    res.awesome;
+			var glyphCount = res.glyph;
+			var awesomeDisplay = new Array(parseInt(awesomeCount/ (awesomeCount+glyphCount+1) *100));
+			var glyphDisplay =  new Array(parseInt(glyphCount/ (awesomeCount+glyphCount+1) * 100));
+			$scope.icon.awesomeIcons =  awesomeDisplay;
+			$scope.icon.glyphIcons = glyphDisplay;
+
+			$scope.icon.awesome = awesomeCount;
+			$scope.icon.glyph =  glyphCount;
+			if(awesomeCount > glyphCount){
+				$scope.icon.winner = 'Font Awesome';
+				$scope.icon.times = parseInt(awesomeCount/ (glyphCount+1));
+				$scope.icon.loser = 'Glyphicon';
+				$scope.icon.reason = 'it offers 2 times more icons';
+				$scope.icon.highlighted = 'a';
+
+			}
+			else{
+				$scope.icon.winner = 'Glyphicon';
+				$scope.icon.times = parseInt(glyphCount/ (awesomeCount+1));
+				$scope.icon.loser = 'Font Awesome';
+				$scope.icon.reason = 'it loads a little faster'
+				$scope.icon.highlighted = 'g';
+			}
+
+
+		});
+
+		$scope.isHighLighted = function(flag){
+			return ($scope.icon.highlighted === flag)
+		};
 
     $scope.addThing = function() {
       if($scope.newThing === '') {

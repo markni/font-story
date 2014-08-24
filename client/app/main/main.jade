@@ -4,10 +4,10 @@ header#banner.hero-unit
   .container
     h1
       | So, I heard you need a
-      a(href='#', tooltip="Typeface is not the same as a font! Your designer yelled at you. Ok, sure. We will still call our project font story anyways.")  {Typeface}
-      |  for your web projects.
+      a(href='#', tooltip="Typeface is not the same as a font! Your designer yelled at you before. Ok, sure. We will still call our project Font Story anyways.",tooltip-placement="bottom")  {Typeface}
+      |  for your next web projects.
 
-    p.lead Our data from {{numberWithCommas(count)}} github commits might just help.
+    p.lead Our analysis from {{numberWithCommas(count)}} github contents might just help.
 
 
 .container
@@ -19,7 +19,7 @@ header#banner.hero-unit
         span.rank {{20-$index}} .
         span(ng-style='applyFont(font._id)') {{font._id}}
 .container
-  .row#compare-serif
+  .row.part#compare-serif
     h2.text-center {Serif or Sans-Serif, that's A question}
 
     div.col-xs-6.text-center.serif#serif
@@ -30,15 +30,41 @@ header#banner.hero-unit
     p.text-center.lead
       | Over
       a  {{serif.percentage}}%
-      |  percent of github choose to use {{serif.winner}} fonts, a more {{serif.style}} appoach.
+      |  percent of github choose to use {{serif.winner}} fonts, a more {{serif.style}} way to print letters.
     p.text-center.lead
       | But really, what does
       a(href="http://en.wikipedia.org/wiki/Serif" alt="A link to people who can explain Serif better than me.",tooltip="Click this will redirect you to a site that can explain Serif better than me.")  Serif
       |  even mean?
 
+
+
 .container
-  .row#find
-    h2.text-center {Find fallback fonts}
+  .row.part#icon
+    div.questionDialog
+      h2.text-left {What About Icons?}
+      p.text-right.lead Yes, Thanks to bootstrap. A lot of people start to use icon fonts.
+    div.questionDialog
+      p.lead.text-left
+        |  {But
+        a(ng-mouseover='icon.highlighted="g"',tooltip="Bundled with bootstrap, offers over 200 icons")  Glyphicon Halflings
+        |  or
+        a(ng-mouseover='icon.highlighted="a"',tooltip="Contains 439 icons by the time I typed this, and they are growing fast.")  Font Awesome
+        |  ?}
+
+
+    ul
+      li(ng-repeat='icon in icon.glyphIcons track by $index',ng-class="{highlighted: isHighLighted('g')}")
+        i.glyphicon.glyphicon-user
+      li(ng-repeat='icon in icon.awesomeIcons track by $index',ng-class="{highlighted: isHighLighted('a')}")
+        i.fa.fa-user
+
+
+
+    p.result.text-center.lead {{icon.times}} Times people choose {{icon.winner}} over {{icon.loser}}, most likely because {{icon.reason}}.
+
+.container
+  .row.part#find
+    h2.text-center {Find Fallback Fonts}
     p.text-center.lead There is always a chance your fancy fonts won't load
 
   form.font-form
@@ -54,8 +80,8 @@ header#banner.hero-unit
         a(href='#',ng-click='findSelected(font._id)') {{font._id}}
 
 
-.container
-  .row#graph
+.container(style="display:none")
+  .row.part#graph
     .col-lg-12
       h1.page-header Features:
 
@@ -75,6 +101,7 @@ header#banner.hero-unit
 footer.footer
   .container
     p
-      a(href='https://twitter.com/tyhenkel') @tyhenkel
-      = ' | '
-      a(href='https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open') Issues
+      = 'An "infotypographic" written by '
+      a(href='https://twitter.com/ruocaled') @ruocaled
+      = ' with '
+      a(href='https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open') Github API

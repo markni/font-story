@@ -21,6 +21,13 @@ var parser = module.exports = {
 
 
 
+	},
+
+	isIcon:function(font){
+		//roughly check if the font is a icon, but we don't have a complete list
+		var icon_fonts = ['icon','fontawesome'];
+		return (icon_fonts.indexOf(font)!== -1);
+
 	}
 
 

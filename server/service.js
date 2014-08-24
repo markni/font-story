@@ -182,7 +182,10 @@ service = module.exports = {
 									//unify font names then split into an array;
 									var fonts = fontFamily.replace(/\\/g, '').replace(/'/g, '').replace(/"/g, '').toLowerCase().split(',');
 									for (var i = 0; i < fonts.length; i++) {
+										//remove important
+										fonts[i] = fonts[i].replace('!important','');
 										//trims spalce
+
 										fonts[i] = fonts[i].replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 									}
 
@@ -222,6 +225,10 @@ service = module.exports = {
 
 										if (Parser.isGeneric(font)) {
 											record.type = 'generic';
+										}
+
+										if (Parser.isIcon(font)) {
+											record.type = 'icon';
 										}
 
 										if (fonts.length - 1 > i) {
