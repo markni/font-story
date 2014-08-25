@@ -265,6 +265,3 @@ service = module.exports = {
 
 };
 
-console.log('Geting public events.....');
-//service.getFontsFromPublicEvents();
-//service.getRateLimit();

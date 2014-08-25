@@ -134,7 +134,7 @@ exports.getCount = function(req,res){
 
 
 
-// Returns top 50 most popular fonts
+// Returns top 20 most popular fonts
 exports.getMostPopular = function(req,res){
 
 	Record.aggregate([
@@ -155,14 +155,14 @@ exports.getMostPopular = function(req,res){
 	});
 };
 
-// Find top 20 fallbacks for a given font
+// Find top 10 fallbacks for a given font
 exports.getFallbacksByName = function(req,res){
 
 	Record.aggregate([
 		{$match:{fallbackof:req.params.name}}
 		,{$group:{_id:'$name',count:{$sum:1}}}
 		,{$sort:{count:-1}}
-		,{$limit:20}
+		,{$limit:10}
 
 
 	],function(err,records){
