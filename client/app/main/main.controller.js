@@ -76,7 +76,7 @@ angular.module('fontStoryApp')
 			$scope.icon.glyph =  glyphCount;
 			if(awesomeCount > glyphCount){
 				$scope.icon.winner = 'Font Awesome';
-				$scope.icon.times = Math.round(awesomeCount/ (glyphCount+1));
+				$scope.icon.times = (awesomeCount/ (glyphCount+0.001)).toFixed(2);
 				$scope.icon.loser = 'Glyphicon';
 				$scope.icon.reason = 'it offers 2 times more icons';
 				$scope.icon.highlighted = 'a';
@@ -84,9 +84,9 @@ angular.module('fontStoryApp')
 			}
 			else{
 				$scope.icon.winner = 'Glyphicon';
-				$scope.icon.times = Math.round(glyphCount/ (awesomeCount+1));
+				$scope.icon.times = (glyphCount/ (awesomeCount+0.001)).toFixed(2);;
 				$scope.icon.loser = 'Font Awesome';
-				$scope.icon.reason = 'it loads a little faster';
+				$scope.icon.reason = 'it is the default icon set for bootstrap';
 				$scope.icon.highlighted = 'g';
 			}
 
