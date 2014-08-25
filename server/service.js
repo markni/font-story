@@ -254,7 +254,7 @@ service = module.exports = {
 					});
 
 				});
-				console.log('Fetching public data compeleted. There are ' + results.length + ' new records have been stored.');
+				console.log('Fetching public data completed. There are ' + results.length + ' new records have been stored.');
 			}
 
 		);
