@@ -12,11 +12,11 @@ describe('Controller: MainCtrl', function () {
 
 	var topFonts = [
 		{
-			_id: "helvetica neue",
+			_id: 'helvetica neue',
 			count: 834
 		},
 		{
-			_id: "verdana",
+			_id: 'verdana',
 			count: 713
 		}
 	];

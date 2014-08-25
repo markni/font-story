@@ -77,7 +77,7 @@ service = module.exports = {
 //				user = 'xna2';
 //				repo = 'intouch2';
 
-			console.log(user + '/' + repo);
+
 
 			//grab heads/master's sha to process
 
@@ -134,7 +134,7 @@ service = module.exports = {
 				// Handle any error from all above steps
 			}).done(function (res) {
 				console.log('Finally....');
-				console.log(res);
+
 
 				if (!res) {
 					return;
@@ -169,7 +169,7 @@ service = module.exports = {
 
 						if (content) {
 
-//							console.log(file);
+
 
 							var css_plain_text = new Buffer(file.content, 'base64').toString('utf-8');
 							var regex = /font-family:(((?![;]{1,}).)*);/gmi;
@@ -192,8 +192,7 @@ service = module.exports = {
 									fonts = fonts.filter(function (font) {
 
 										if (font.search(/^[-a-z ]+$/gm) === -1 || font.search('inherit') !== -1) {
-											console.log(font);
-										 	console.log('rejected font...');
+
 											//todo:handle non-english font
 											//todo:handle sass/less variable, return false for now
 											return false;
@@ -201,7 +200,7 @@ service = module.exports = {
 										return true;
 									});
 
-									console.log();
+
 
 									fonts.forEach(function (font, i) {
 										var record = {};

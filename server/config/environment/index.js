@@ -60,8 +60,8 @@ var all = {
 	},
 
 	github:{
-		clientID: process.env.GITHUB_ID || 'ef9e8a14dc67c952825e',
-		clientSecret: process.env.GITHUB_SECRET || 'b812bdc457f0b718339847e52c01e67814e9d94c',
+		clientID: process.env.GITHUB_ID || 'id',
+		clientSecret: process.env.GITHUB_SECRET || 'secret',
 		callbackURL: process.env.DOMAIN + '/auth/github/callback'
 	}
 
