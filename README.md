@@ -14,12 +14,16 @@ This simple projects aimed to answer these questions (for now):
 
 
 ###Installation
+Requires nodejs and mongodb
 
 ```npm install```
 
 ###Run
 
-```grunt serve```
+First fill in your Github api id and secrets in server/config/local.env.js
+
+Then `grunt serve`
+
 
 ###Test
 
