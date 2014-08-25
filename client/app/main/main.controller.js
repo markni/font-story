@@ -1,19 +1,13 @@
 'use strict';
 
 angular.module('fontStoryApp')
-  .controller('MainCtrl', function ($scope, $http, socket) {
-//    $scope.awesomeThings = [];
+  .controller('MainCtrl', function ($scope, $http) {
+
 		$scope.topFonts = [];
 		$scope.count = 1000;
 		$scope.serif = {};
 		$scope.icon = {};
 
-
-
-//    $http.get('/api/things').success(function(awesomeThings) {
-//      $scope.awesomeThings = awesomeThings;
-//      socket.syncUpdates('thing', $scope.awesomeThings);
-//    });
 
 		$http.get('/api/records/count').success(function(res){
 			$scope.count = res.count || 1000;
@@ -103,21 +97,6 @@ angular.module('fontStoryApp')
 			return ($scope.icon.highlighted === flag);
 		};
 
-    $scope.addThing = function() {
-      if($scope.newThing === '') {
-        return;
-      }
-      $http.post('/api/things', { name: $scope.newThing });
-      $scope.newThing = '';
-    };
-
-    $scope.deleteThing = function(thing) {
-      $http.delete('/api/things/' + thing._id);
-    };
-
-    $scope.$on('$destroy', function () {
-      socket.unsyncUpdates('thing');
-    });
 
 
 		$scope.numberWithCommas = function(x) {

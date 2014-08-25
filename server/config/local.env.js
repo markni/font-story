@@ -18,8 +18,8 @@ module.exports = {
   GOOGLE_ID: 'app-id',
   GOOGLE_SECRET: 'secret',
 
-	GITHUB_ID: 'app-id',
-	GITHUB_SECRET: 'secret',
+	GITHUB_ID: 'ef9e8a14dc67c952825e',
+	GITHUB_SECRET: 'b812bdc457f0b718339847e52c01e67814e9d94c',
 
   // Control debug level for modules using visionmedia/debug
   DEBUG: ''
