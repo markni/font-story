@@ -2,7 +2,7 @@
 
 angular.module('fontStoryApp')
   .controller('MainCtrl', function ($scope, $http, socket) {
-    $scope.awesomeThings = [];
+//    $scope.awesomeThings = [];
 		$scope.topFonts = [];
 		$scope.count = 1000;
 		$scope.serif = {};
