@@ -3,9 +3,9 @@
 header#banner.hero-unit
   .container
     h1
-      | So, I heard you need a
+      = 'So, I heard you need a '
       a(href='#', tooltip="Typeface is not the same as a font! Your designer yelled at you before. Ok, sure. We will still call our project Fonts Story anyways.",tooltip-placement="bottom")  {Typeface}
-      |  for your next web projects.
+      = ' for your next web projects.'
 
     p.lead Our analysis from {{numberWithCommas(count)}} github contents might just help.
 
@@ -29,13 +29,13 @@ header#banner.hero-unit
       a(tooltip="This is a sans-serif font. The word sans means without, that pretty much explained itself.",tooltip-placement="left") A
 
     p.text-center.lead
-      | Over
+      = 'Over'
       a  {{serif.percentage}}%
-      |  percent of github choose to use {{serif.winner}} fonts, a more {{serif.style}} way to print letters.
+      = ' percent of github choose to use {{serif.winner}} fonts, a more {{serif.style}} way to print letters.'
     p.text-center.lead
-      | But really, what does
+      = 'But really, what does '
       a(href="http://en.wikipedia.org/wiki/Serif",target="_blank",alt="A link to people who can explain Serif better than me.",tooltip="Click this will redirect you to a site that can explain Serif better than me.")  Serif
-      |  even mean?
+      = ' even mean?'
 
 
 
@@ -43,14 +43,14 @@ header#banner.hero-unit
   .row.part#icon
     div.questionDialog
       h2.text-left {What About Icons?}
-      p.text-right.lead Yes, Thanks to bootstrap. A lot of people start to use icon fonts.
+      p.text-right.lead Thanks to bootstrap, a lot of people start to use font based icons.
     div.questionDialog
       p.lead.text-left
-        |  {But
+        = '{But '
         a(ng-mouseover='icon.highlighted="g"',tooltip="Bundled with bootstrap, offers over 200 icons")  Glyphicon Halflings
-        |  or
+        = ' or '
         a(ng-mouseover='icon.highlighted="a"',tooltip="Contains 439 icons by the time I typed this, and they are growing fast.")  Font Awesome
-        |  ?}
+        = ' ?}'
 
 
     ul
@@ -75,6 +75,9 @@ header#banner.hero-unit
       input.form-control(type='text', placeholder='Input your font name here, see what other people on Github used as fallbacks', ng-model='searchTerm')
       span.input-group-btn
         button.btn.btn-primary(type='submit', ng-click='find()') Find
+
+    p(ng-if='showNoResErr').text-center.error Sorry, we have not gather any data about the font you asked. Try again later.
+
 
     ul.nav.nav-tabs.nav-stacked.col-md-4.col-lg-4.col-sm-6(ng-repeat='font in findFonts')
       li

@@ -128,6 +128,13 @@ angular.module('fontStoryApp')
 			var target = $scope.searchTerm.toLowerCase();
 			$http.get('/api/records/fallbacks/'+target).success(function(res){
 				$scope.findFonts = res;
+
+				if(res.length){
+					$scope.showNoResErr = false;
+				}
+				else{
+					$scope.showNoResErr = true;
+				}
 			});
 		};
 
@@ -136,6 +143,12 @@ angular.module('fontStoryApp')
 			var target = fontName.toLowerCase();
 			$http.get('/api/records/fallbacks/'+target).success(function(res){
 				$scope.findFonts = res;
+				if(res.length){
+					$scope.showNoResErr = false;
+				}
+				else{
+					$scope.showNoResErr = true;
+				}
 			});
 		};
 
@@ -144,4 +157,7 @@ angular.module('fontStoryApp')
 			fontname = '"'+fontname+'"';
 			return {fontFamily:fontname};
 		};
+
+
+
   });

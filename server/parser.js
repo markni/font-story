@@ -25,7 +25,7 @@ var parser = module.exports = {
 
 	isIcon:function(font){
 		//roughly check if the font is a icon, but we don't have a complete list
-		return (font.search(/icon|fontawesome/mi) == -1);
+		return (font.search(/icon|fontawesome/mi) !== -1);
 
 	}
 
