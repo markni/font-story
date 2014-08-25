@@ -50,6 +50,16 @@ $light: #4393B9;
 #fav {
   position:relative;
 
+  a {
+	cursor: pointer;
+	text-decoration: none;
+	color:black;
+	&:hover{
+	  color:$light;
+	}
+
+
+  }
   padding-top: 50px;
   text-align: right;
   #circle {

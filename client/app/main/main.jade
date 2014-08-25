@@ -13,7 +13,12 @@ header#banner.hero-unit
 .container
   .row#fav
 
-    h2 {Github's Favourite Fonts}
+    h2
+      = "{Github's Favorite Fonts}"
+    p
+      a(tooltip='toggle date range',tooltip-placement="left",ng-click='toggleDateRange()')
+        = '{{daterange}}  '
+        i.fa.fa-arrows-v
 
     ol
       li(ng-repeat='font in topFonts')
@@ -33,9 +38,9 @@ header#banner.hero-unit
       a  {{serif.percentage}}%
       = ' percent of github choose to use {{serif.winner}} fonts, a more {{serif.style}} way to print letters.'
     p.text-center.lead
-      = 'But really, what does '
+      = '{But wait, what does '
       a(href="http://en.wikipedia.org/wiki/Serif",target="_blank",alt="A link to people who can explain Serif better than me.",tooltip="Click this will redirect you to a site that can explain Serif better than me.")  Serif
-      = ' even mean?'
+      = ' even mean?}'
 
 
 
@@ -47,9 +52,9 @@ header#banner.hero-unit
     div.questionDialog
       p.lead.text-left
         = '{But '
-        a(ng-mouseover='icon.highlighted="g"',tooltip="Bundled with bootstrap, offers over 200 icons")  Glyphicon Halflings
+        a(ng-mouseover='icon.highlighted="g"',tooltip="Bundled with bootstrap, offers over 200 icons",href="http://glyphicons.com/",target='_blank')  Glyphicon Halflings
         = ' or '
-        a(ng-mouseover='icon.highlighted="a"',tooltip="Contains 439 icons by the time I typed this, and they are growing fast.")  Font Awesome
+        a(ng-mouseover='icon.highlighted="a"',tooltip="Contains 439 icons by the time I typed this, and they are growing fast.",href='http://fortawesome.github.io/Font-Awesome/',target='_blank')  Font Awesome
         = ' ?}'
 
 

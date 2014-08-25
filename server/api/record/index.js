@@ -7,6 +7,7 @@ var router = express.Router();
 
 router.get('/fallbacks/:name', controller.getFallbacksByName);
 router.get('/top', controller.getMostPopular);
+router.get('/top/:range', controller.getMostPopular);
 router.get('/count', controller.getCount);
 router.get('/serif-vs-sans-serif', controller.compareSerif);
 router.get('/awesome-vs-glyph', controller.compareIcon);

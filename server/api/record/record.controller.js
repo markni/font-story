@@ -5,10 +5,7 @@ var Record = require('./record.model');
 
 // Get list of records
 exports.index = function(req, res) {
-  Record.find(function (err, records) {
-    if(err) { return handleError(res, err); }
-    return res.json(200, records);
-  });
+	return res.send(404);
 };
 
 // Get a single record
@@ -137,8 +134,27 @@ exports.getCount = function(req,res){
 // Returns top 20 most popular fonts
 exports.getMostPopular = function(req,res){
 
+	var query;
+	var d = new Date();
+	var yesterday = new Date(d.setDate(d.getDate()-1));
+
+	if(req.params && req.params.hasOwnProperty('range') && req.params.range=== 'today'){
+		console.log('---------------------------------------');
+
+		query = {
+			$and:[
+				{type:'primary'},
+				{created:{$gte:yesterday,$lt:(new Date())}}
+			]
+		};
+
+	}
+	else{
+		query = {type:'primary'};
+	}
+
 	Record.aggregate([
-		{$match:{type:'primary'}}
+		{$match:query}
 		,{$group:{_id:'$name',count:{$sum:1}}}
 		,{$sort:{count:-1}}
 		,{$limit:20}
