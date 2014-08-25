@@ -20,7 +20,7 @@ Requires nodejs and mongodb
 
 ###Run
 
-First fill in your Github api id and secrets in server/config/local.env.js
+First fill in your Github api id and secrets in `server/config/local.env.js`
 
 Then `grunt serve`
 
