@@ -187,7 +187,7 @@ angular.module('fontStoryApp')
 
 			  // code block via http://bl.ocks.org/mbostock/4063550
 
-				var diameter = 960;
+				var diameter = 750;
 
 				var tree = d3.layout.tree()
 					.size([350, diameter / 2 - 120])

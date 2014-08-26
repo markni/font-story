@@ -1,5 +1,11 @@
 $not-so-white: #eeeeee;
-$light: #4393B9;
+$not-so-black: rgb(51, 51, 51);
+$light: #4393b9;
+$pink: #DA4C43;
+
+a,em,span {
+ transition: color 0.5s;
+}
 
 #banner {
   border-bottom: none;
@@ -8,6 +14,38 @@ $light: #4393B9;
     margin-top: 50px;
     font-family: 'Noto Serif', serif;
   }
+  h1 {
+
+	padding-right:10%;
+	font-family: 'Noto Serif', serif;
+	font-weight: 400;
+
+	font-size: 90px;
+	line-height: 1;
+	letter-spacing: -1px;
+	color:$not-so-white;
+	p {
+	  margin:10px;
+	}
+	.tooltip{
+	  letter-spacing:normal;
+
+	}
+
+	a {
+	  font-style: normal;
+	  text-decoration: none;
+	  color:white;
+	  cursor: pointer;
+
+	  &:hover{
+		color:$not-so-black;
+	  }
+
+
+	}
+  }
+
   .container{
 
     text-align: left;
@@ -15,47 +53,21 @@ $light: #4393B9;
 
 }
 
-#banner h1 {
-
-  padding-right:10%;
-  font-family: 'Noto Serif', serif;
-  font-weight: 400;
-
-  font-size: 90px;
-  line-height: 1;
-  letter-spacing: -1px;
-  color:$not-so-white;
-  p {
-    margin:10px;
-  }
-  .tooltip{
-	letter-spacing:normal;
-
-  }
-
-  a {
-    font-style: normal;
-    text-decoration: none;
-    color:white;
-    cursor: pointer;
-
-	&:hover{
-	  color:black;
-	}
-
-
-  }
-}
 
 #fav {
   position:relative;
 
+
   a {
 	cursor: pointer;
 	text-decoration: none;
-	color:black;
+	color:$not-so-black;
 	&:hover{
 	  color:$light;
+	}
+
+	i{
+	  color:rgba(0,0,0,0.4);
 	}
 
 
@@ -98,13 +110,22 @@ $light: #4393B9;
 }
 
 #compare-serif{
+  a{
+	cursor: pointer;
+	text-decoration: none;
+	color:$light;
+
+	&:hover{
+	  color:$not-so-black;
+	}
+  }
 
   .serif{
 	font-size: 250px;
 	a{
-	  cursor: pointer;
-	  text-decoration: none;
-	  color:black;
+
+	  color:$not-so-black;;
+
 	  &:hover{
 		color:$light;
 	  }
@@ -118,11 +139,20 @@ $light: #4393B9;
   }
   #compare{
 	height: 5px;
-	background-color:black;
+	background-color:$not-so-black;
   }
 }
 
 #find{
+  #btn-find {
+	background-color: $light;
+	border: 1px solid $light;
+  }
+  input:focus{
+	box-shadow: none;
+	outline-color: $light;
+	border-color: $light;
+  }
 
 }
 
@@ -133,7 +163,7 @@ $light: #4393B9;
   }
   a{
 	cursor: pointer;
-	color:black;
+	color:$not-so-black;
 	&:hover{
 	  color:$light;
 	}
@@ -177,11 +207,13 @@ $light: #4393B9;
 }
 
 .part {
+
   border-top: solid #000000 3px;
   margin-top: 50px;
   padding-top: 50px;
   a{
 	text-decoration: none;
+
   }
   h2,p {
 	font-family: 'Noto Serif', serif;

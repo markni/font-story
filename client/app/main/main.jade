@@ -78,20 +78,20 @@ header#banner.hero-unit
     h2.text-center {Find Fallback Fonts}
     p.text-center.lead There is always a chance your fancy fonts won't load
 
-  form.font-form
+    form.font-form
 
 
-    p.input-group
-      input.form-control(type='text', placeholder='Input your font name here, see what other people on Github used as fallbacks', ng-model='searchTerm')
-      span.input-group-btn
-        button.btn.btn-primary(type='submit', ng-click='find()') Find
+      p.input-group
+        input.form-control(type='text', placeholder='Input your font name here, see what other people on Github used as fallbacks', ng-model='searchTerm')
+        span.input-group-btn
+          button.btn.btn-primary#btn-find(type='submit', ng-click='find()') Find
 
-    p(ng-if='showNoResErr').text-center.error Sorry, we have not gather any data about the font you asked. Try again later.
+      p(ng-if='showNoResErr').text-center.error Sorry, we have not gather any data about the font you asked. Try again later.
 
 
-    ul.nav.nav-tabs.nav-stacked.col-md-4.col-lg-4.col-sm-6(ng-repeat='font in findFonts')
-      li
-        a(href='#',ng-click='findSelected(font._id)') {{font._id}}
+      ul.nav.nav-tabs.nav-stacked.col-md-4.col-lg-4.col-sm-6(ng-repeat='font in findFonts')
+        li
+          a(href='#',ng-click='findSelected(font._id)') {{font._id}}
 
 
 
