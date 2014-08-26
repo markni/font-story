@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "main": "server/app.js",
   "dependencies": {
+    "apicache": "0.0.12",
     "body-parser": "~1.0.0",
     "composable-middleware": "^0.3.0",
     "compression": "~1.0.1",

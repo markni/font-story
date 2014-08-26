@@ -43,6 +43,11 @@ header#banner.hero-unit
       = ' even mean?}'
 
 
+.container
+  .row.part
+    #tree
+    h2.text-center(tooltip="A font family, tree, Carl!") {In a Font Family Tree}
+    p.lead.text-center A glance of how people use their fonts together as a Font Family.
 
 .container
   .row.part#icon
@@ -87,6 +92,8 @@ header#banner.hero-unit
     ul.nav.nav-tabs.nav-stacked.col-md-4.col-lg-4.col-sm-6(ng-repeat='font in findFonts')
       li
         a(href='#',ng-click='findSelected(font._id)') {{font._id}}
+
+
 
 
 

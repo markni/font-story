@@ -6,14 +6,6 @@ var request = require('supertest');
 var Record = require('./record.model');
 
 
-describe('GET /api/records', function() {
-
-
-
-
-});
-
-
 describe('GET /api/records/fallbacks/:name', function() {
 
 	it('should respond get a list of fallback fonts with given font name', function(done) {
