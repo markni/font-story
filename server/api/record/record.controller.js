@@ -122,7 +122,7 @@ exports.compareIcon = function (req, res) {
 
 			result['glyph'] = count2;
 
-			console.log(result);
+
 
 			return res.json(result);
 
@@ -153,7 +153,7 @@ exports.getMostPopular = function (req, res) {
 	var yesterday = new Date(d.setDate(d.getDate() - 1));
 
 	if (req.params && req.params.hasOwnProperty('range') && req.params.range === 'today') {
-		console.log('---------------------------------------');
+
 
 		query = {
 			$and: [
@@ -184,7 +184,7 @@ exports.getMostPopular = function (req, res) {
 		if (!records) {
 			return res.send(404);
 		}
-		console.log(records);
+
 		return res.json(records);
 
 	});

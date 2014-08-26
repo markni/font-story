@@ -41,10 +41,11 @@ service = module.exports = {
 
 		var remaining = res.rate.remaining;
 		if (remaining && remaining > 2000) {
+			console.log(remaining+', OK...');
 			return  getPublicEvents({page: 1});
 		}
 		else {
-			return Q.reject({message: 'remaining limit too small'});
+			return Q.reject({message: 'Not enough API calls left...'});
 		}
 
 	},
@@ -107,18 +108,18 @@ service = module.exports = {
 
 		}).then(function (res) {
 
-				console.log('Checking limit');
+				console.log('Checking API limit...');
 				return service.checkRateLimit(res);
 
 			}).then(function (events) {
 
-				console.log('GetContents...');
+				console.log('Get Contents...');
 
 				return service.getContentsFromEvents(events,user_repo_map);
 
 			}).catch(function (error) {
 
-				console.log('Opps, something went wrong.');
+				console.log('Opps, something went wrong...');
 				console.log(error);
 
 				// Handle any error from all above steps
