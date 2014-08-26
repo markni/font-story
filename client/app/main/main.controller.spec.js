@@ -28,10 +28,19 @@ describe('Controller: MainCtrl', function () {
       .respond({count:100});
 		$httpBackend.expectGET('/api/records/top')
 			.respond(topFonts);
+
+
+
+
 		$httpBackend.expectGET('/api/records/serif-vs-sans-serif')
 			.respond({serif:10,'sans-serif':80});
-				$httpBackend.expectGET('/api/records/awesome-vs-glyph')
+
+		$httpBackend.expectGET('/api/records/awesome-vs-glyph')
 			.respond({awesome:40,glyph:20});
+
+
+		$httpBackend.expectGET('/api/records/t')
+			.respond([{name:'',children:[]}]);
 
     scope = $rootScope.$new();
     MainCtrl = $controller('MainCtrl', {
@@ -81,6 +90,7 @@ describe('Controller: MainCtrl', function () {
 		expect(scope.icon.times).toBeCloseTo(2);
 
 	});
+
 
 
 	it('the winner should be sans-serif', function () {
