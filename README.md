@@ -12,6 +12,8 @@ This simple projects aimed to answer these questions (for now):
 - **I'm using bootstrap, which font based icon-set should I use?**
 - **There is a font I really like to use, but I'm worrying about its backwards compatibility. What fonts should I use as fallback?**
 
+![alt text](http://nagi.ca/u/fonts_nagi_ca.png "Logo Title Text 1")
+
 
 ###Online Demo
 
