@@ -69,16 +69,6 @@ service = module.exports = {
 
 			user_repo_map.push({user: user, repo: repo});
 
-			//test empty repo
-//				user = 'xna2';
-//				repo = 'empty';
-
-//				test empty repo
-//				user = 'xna2';
-//				repo = 'intouch2';
-
-
-
 			//grab heads/master's sha to process
 
 			return getReference({user: user, repo: repo, ref: ref}).then(function (ref) {
