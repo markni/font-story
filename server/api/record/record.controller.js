@@ -217,6 +217,9 @@ exports.getFallbacksByName = function (req, res) {
 
 };
 
+
+//Returns 2 height 3 Family Trees started from Serif and Sans-serif in an array
+
 exports.getTree = function (req, res) {
 
 	var first = [

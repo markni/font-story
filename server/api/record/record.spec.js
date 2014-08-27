@@ -5,6 +5,31 @@ var app = require('../../app');
 var request = require('supertest');
 var Record = require('./record.model');
 
+before(function(done) {
+	Record.find({}).remove(function(){
+		Record.create([
+			{name:'font a',user:'user a',repo:'repo a',type:'primary',dependon:'font b',created:Date.now()},
+			{name:'font a',user:'user a',repo:'repo a',type:'primary',dependon:'font c',created:Date.now()},
+			{name:'font b',user:'user a',repo:'repo a',type:'fallback',fallbackof:'font a',dependon:'serif',created:Date.now()},
+			{name:'font c',user:'user a',repo:'repo a',type:'pfallback',fallbackof:'font a',dependon:'serif',created:Date.now()},
+			{name:'serif',user:'user a',repo:'repo a',type:'generic',fallbackof:'font b',created:Date.now()},
+			{name:'serif',user:'user a',repo:'repo a',type:'generic',fallbackof:'font c',created:Date.now()},
+
+			{name:'font d',user:'user a',repo:'repo a',type:'primary',dependon:'font e',created:Date.now()},
+			{name:'font e',user:'user a',repo:'repo a',type:'fallback',fallbackof:'font d',dependon:'sans-serif',created:Date.now()},
+			{name:'sans-serif',user:'user a',repo:'repo a',type:'generic',fallbackof:'font e',created:Date.now()},
+
+			{name:'fontawesome',user:'user a',repo:'repo a',type:'icon',created:Date.now()},
+			{name:'fontawesome',user:'user a',repo:'repo a',type:'icon',created:Date.now()},
+			{name:'glyphicon halflings',user:'user a',repo:'repo a',type:'icon',created:Date.now()}
+
+
+		],function(err){
+			console.log('Finished populate fake records');
+			done();
+		});
+	});
+});
 
 describe('GET /api/records/fallbacks/:name', function() {
 
