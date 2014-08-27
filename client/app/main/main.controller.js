@@ -180,7 +180,7 @@ angular.module('fontStoryApp')
 
 		function getTree(){
 
-			var root = {name:'Center of Chaos',children:[]};
+			var root = {name:'Mother of All Fonts',children:[]};
 
 			$http.get('/api/records/t').success(function(res){
 				root.children = res;
