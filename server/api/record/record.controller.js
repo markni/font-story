@@ -210,7 +210,7 @@ exports.getFallbacksByName = function (req, res) {
 		if (!records) {
 			return res.send(404);
 		}
-		console.log(records);
+
 		return res.json(records);
 
 	});

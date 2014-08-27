@@ -14,7 +14,7 @@ Record.find({}).remove(function(){
 		{name:'font a',user:'user a',repo:'repo a',type:'primary',dependon:'font b',created:Date.now()},
 		{name:'font a',user:'user a',repo:'repo a',type:'primary',dependon:'font c',created:Date.now()},
 		{name:'font b',user:'user a',repo:'repo a',type:'fallback',fallbackof:'font a',dependon:'serif',created:Date.now()},
-		{name:'font c',user:'user a',repo:'repo a',type:'pfallback',fallbackof:'font a',dependon:'serif',created:Date.now()},
+		{name:'font c',user:'user a',repo:'repo a',type:'fallback',fallbackof:'font a',dependon:'serif',created:Date.now()},
 		{name:'serif',user:'user a',repo:'repo a',type:'generic',fallbackof:'font b',created:Date.now()},
 		{name:'serif',user:'user a',repo:'repo a',type:'generic',fallbackof:'font c',created:Date.now()},
 
