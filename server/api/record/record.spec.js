@@ -6,6 +6,7 @@ var request = require('supertest');
 var Record = require('./record.model');
 
 before(function(done) {
+	this.timeout(15000);
 	Record.find({}).remove(function(){
 		Record.create([
 			{name:'font a',user:'user a',repo:'repo a',type:'primary',dependon:'font b',created:Date.now()},
