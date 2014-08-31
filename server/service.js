@@ -124,9 +124,6 @@ service = module.exports = {
 
 				// Handle any error from all above steps
 			}).done(function (res) {
-				console.log('Finally....');
-
-
 				if (!res) {
 					return;
 				}

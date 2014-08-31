@@ -28,15 +28,13 @@ require('./config/express')(app);
 require('./routes')(app);
 
 
-
-//Fetch Github services
-require('./planner');
-//require('./service');
-
 // Start server
 server.listen(config.port, config.ip, function () {
   console.log('Express server listening on %d, in %s mode', config.port, app.get('env'));
 });
+
+console.log('Run planner.js in a separate process to fetch data from Github');
+console.log('Use "grunt fetch" if in development env');
 
 // Expose app
 exports = module.exports = app;

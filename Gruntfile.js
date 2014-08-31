@@ -15,7 +15,8 @@ module.exports = function (grunt) {
     ngtemplates: 'grunt-angular-templates',
     cdnify: 'grunt-google-cdn',
     protractor: 'grunt-protractor-runner',
-    injector: 'grunt-asset-injector'
+    injector: 'grunt-asset-injector',
+		execute: 'grunt-execute'
   });
 
   // Time how long tasks take. Can help when optimizing build times
@@ -46,6 +47,11 @@ module.exports = function (grunt) {
         }
       }
     },
+		execute: {
+			target: {
+				src: ['server/planner.js']
+			}
+		},
     open: {
       server: {
         url: 'http://localhost:<%= express.options.port %>'
@@ -592,6 +598,14 @@ module.exports = function (grunt) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve']);
   });
+
+	grunt.registerTask('fetch',function(){
+		return grunt.task.run([
+			'env:all',
+			'execute'
+		])
+
+	});
 
   grunt.registerTask('test', function(target) {
     if (target === 'server') {
