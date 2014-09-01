@@ -21,7 +21,8 @@ http://fonts.nagi.ca
 
 
 ###Installation
-Requires nodejs and mongodb
+
+Pre-requires nodejs 10.x and mongodb
 
 > ```npm install```
 
