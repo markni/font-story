@@ -63,6 +63,10 @@ a,em,span {
 
 #fav {
 
+  .numberone.picked{
+	border-bottom: none;
+  }
+
   .picked{
 	border-bottom: 2px solid black;
 	padding-bottom: 30px;

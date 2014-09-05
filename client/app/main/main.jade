@@ -23,7 +23,7 @@ header#banner.hero-unit
       li(ng-repeat='font in topFonts',ng-mouseover='pick(font)')
         span.rank {{20-$index}} .
         span(ng-style='applyFont(font._id)') {{font._id}}
-        div.picked(ng-if="picked.fontName===font._id")
+        div.picked(ng-if="picked.fontName===font._id",ng-class='{"numberone":$index==19}')
           p.percentage {{picked.percentage}}%
           p.installed(ng-if='picked.installed') INSTALLED
           p.installed(ng-if='!picked.installed') NOT INSTALLED
