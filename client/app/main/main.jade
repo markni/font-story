@@ -12,7 +12,6 @@ header#banner.hero-unit
 
 .container
   .row#fav
-
     h2
       = "{Github's Favorite Fonts}"
     p
@@ -21,9 +20,16 @@ header#banner.hero-unit
         i.fa.fa-arrows-v
 
     ol
-      li(ng-repeat='font in topFonts')
+      li(ng-repeat='font in topFonts',ng-mouseover='pick(font)')
         span.rank {{20-$index}} .
         span(ng-style='applyFont(font._id)') {{font._id}}
+        div.picked(ng-if="picked.fontName===font._id")
+          p.percentage {{picked.percentage}}%
+          p.installed(ng-if='picked.installed') INSTALLED
+          p.installed(ng-if='!picked.installed') NOT INSTALLED
+
+
+
 .container
   .row.part#compare-serif
     h2.text-center {Serif or Sans-Serif, that's A question}
@@ -92,8 +98,6 @@ header#banner.hero-unit
       ul.nav.nav-tabs.nav-stacked.col-md-4.col-lg-4.col-sm-6(ng-repeat='font in findFonts')
         li
           a(href='#',ng-click='findSelected(font._id)') {{font._id}}
-
-
 
 
 

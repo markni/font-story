@@ -1,4 +1,5 @@
 /*global d3 */
+/*global checkfont */
 
 'use strict';
 
@@ -14,6 +15,7 @@ angular.module('fontStoryApp')
 		$scope.serif = {};
 		$scope.icon = {};
 		$scope.daterange = 'All Times';
+		$scope.picked = {};
 
 
 		$http.get('/api/records/count').success(function(res){
@@ -114,6 +116,13 @@ angular.module('fontStoryApp')
 
 
 		});
+
+		$scope.pick = function(font){
+			$scope.picked.fontName = font._id;
+			$scope.picked.percentage = (font.count/$scope.count*100).toFixed(2);
+			$scope.picked.installed = checkfont(font._id);
+
+		};
 
 		$scope.isHighLighted = function(flag){
 			return ($scope.icon.highlighted === flag);

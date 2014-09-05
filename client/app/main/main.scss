@@ -8,6 +8,7 @@ a,em,span {
 }
 
 #banner {
+  z-index: 99;
   border-bottom: none;
   margin-top: -20px;
   p {
@@ -53,9 +54,38 @@ a,em,span {
 
 }
 
+.container{
+
+
+}
+
+
 
 #fav {
-  position:relative;
+
+  .picked{
+	border-bottom: 2px solid black;
+	padding-bottom: 30px;
+	margin-bottom: 20px;
+
+	p{
+	  line-height: 25px;
+	  font-size: 20px;
+	  color:black;
+	  margin: 0;
+
+	}
+	p.percentage{
+	  font-weight: bold;
+	}
+	p.installed{
+	  color:$light;
+	  font-size: 15px;
+
+	}
+
+  }
+
 
 
   a {
@@ -97,6 +127,7 @@ a,em,span {
 	li{
 	  cursor: pointer;
 	  &:hover{
+		font-size: 40px;
 		color:$light;
 	  }
 	  font-size: 25px;
@@ -110,6 +141,8 @@ a,em,span {
 }
 
 #compare-serif{
+  background-color: white;
+  z-index: 99;
   a{
 	cursor: pointer;
 	text-decoration: none;
@@ -144,6 +177,7 @@ a,em,span {
 }
 
 #find{
+  z-index: 99;
   #btn-find {
 	background-color: $light;
 	border: 1px solid $light;
